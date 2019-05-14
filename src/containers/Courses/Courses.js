@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import Course from '../Course/Course';// eslint-disable-next-line
 import queryString from 'query-string';
 
@@ -21,18 +21,25 @@ class Courses extends Component {
         
     }
 
-    selectedCourseHandler = (Id) => {
-        this.props.history.push({pathname: this.props.match.url + '/courses/' + Id})
+    selectedCourseHandler = (id) => {
+        this.props.history.push({pathname: this.props.match.url + '/courses/' + id})
     }
 
     render() {
         let course = this.state.courses.map( course => {
             return (
-                <NavLink to={
-                    "/course/" + course.id
-                } className="Course" key={course.id}>
+                <Link 
+                    className="Course" 
+                    key={course.id}
+                    to={{
+                    
+                       pathname: this.props.match.url + "/course/" + course.id,
+                       search: '?tittle=' + course.title
+
+                    }}
+                >
                     {course.title}   
-                </NavLink>
+                </Link>
             )
         } )
         
@@ -45,7 +52,7 @@ class Courses extends Component {
 
                 <hr />
             
-                <Route path={this.props.match.url + "/:id"} component={Course} />
+                <Route path={this.props.match.url + "/course/:id"} component={Course} />
             </div>
         );
     }
