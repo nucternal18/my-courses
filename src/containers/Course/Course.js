@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
-import './Course.css';
+import './Course.css';// eslint-disable-next-line
 import queryString from 'query-string';
+
 
 class Course extends Component {
     state = {
         title: '',
-        loadTitle: false
     }
-
-    const values = () => { queryString.parse(this.props.location.search)
-    if (!this.state.loadTitle) {
-        this.setState({ title: values.title})
-    }
+    handleTitle() {        
+            const query = new URLSearchParams(this.props.location.search)
+            for (let param of query.entries()) {
+                if (this.state.title !== param[1]) {
+                    this.setState({ title: param[1] })
+                }
+            } 
     }
     
     componentDidMount() {
         console.log(this.props);
-        const values = queryString.parse(this.props.location.search)
-        //const myQuery = new URLSearchParams(this.props.location.search);
-        console.log(values);
-        this.setState({ title: values.title})        
+        this.handleTitle()
+    }
+
+    componentDidUpdate() {
+        this.handleTitle()
     }
     
     render () {
         return (
             <div className="Course">
-                <h1>{this.props.title}</h1>
+                <h1>{this.state.title}</h1>
                 <p>You selected the Course with ID: {this.props.match.params.id}</p>
             </div>
         );

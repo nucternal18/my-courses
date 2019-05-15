@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';// eslint-disable-next-line 
 import { BrowserRouter, Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import NotFound from './containers/404Error/404Error';
+import './App.css'
 
 
 import Courses from './containers/Courses/Courses';
@@ -10,14 +11,16 @@ class App extends Component {
   render () {
     return (
       <BrowserRouter>
-        <div className="App">
+        <div >
         <header>
                     <nav>
                         <ul>
-                            <li><NavLink to="/users/" exact>Users</NavLink></li>
+                            <li><NavLink to="/users/" exact className="text">Users</NavLink></li>
                             <li><NavLink to={{
                                 pathname: '/courses'
-                            }}>Courses</NavLink></li>
+                        }}
+                        className="text"
+                        >Courses</NavLink></li>
                         </ul>
                     </nav>
           </header>
@@ -25,13 +28,12 @@ class App extends Component {
             <Route path="/courses" component={Courses} />
             {/* <Route path="/course/:id" component={Course} /> */}
             <Route path="/users" component={Users} />
-            <Redirect from="/" to="/courses"/>
-            <Route component={NotFound}/>
+            <Route render={() => <NotFound />} />
+            {/* <Redirect from="/" to="/courses"/> */}
           </Switch>
           <ol style={{ textAlign: 'left' }}>
 
-            <li>Pass the course title to the "Course" page - pass it as a param or score bonus points by passing it as query params (you need to manually parse them though!)</li>
-            <li>Add a 404 error page and render it for any unknown routes</li>
+            
           </ol>
         </div>
       </BrowserRouter>
